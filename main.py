@@ -11,7 +11,6 @@ labels = [1, 0, 1, 0]  # 1 = urgentní, 0 = neurgentní
 vocab = list(set(" ".join(texts).split()))
 word_to_ix = {word: i for i, word in enumerate(vocab)}
 
-X = torch.stack([vectorize(t) for t in texts])
 Y = torch.tensor(labels, dtype=torch.float32).unsqueeze(1)
 
 def vectorize(text):
@@ -20,6 +19,8 @@ def vectorize(text):
         if word in word_to_ix:
             vec[word_to_ix[word]] += 1
     return vec
+
+X = torch.stack([vectorize(t) for t in texts])
 
 # Model: Jednoduchá neuronová síť pro klasifikaci
 class Classifier(nn.Module):
